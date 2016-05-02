@@ -28,7 +28,6 @@ def main():
 	data = json.loads(predata)
 	data["response"]["players"][0]["time"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 	data["response"]["players"][0]["absolutetime"] = calendar.timegm(time.gmtime())
-	#print predata
 	lastlogoff = time.strftime('%d %B %Y, %I:%M %p', time.localtime(data["response"]["players"][0]["lastlogoff"]))
 	created = time.strftime('%d %B %Y, %I:%M %p', time.localtime(data["response"]["players"][0]["timecreated"]))
 	print "Profile name: " + data["response"]["players"][0]["personaname"]
@@ -43,11 +42,11 @@ def main():
 		print "Tracking SteamID " + data["response"]["players"][0]["steamid"] + " with interval "+ str(seconds)+"s"
 		while True:
 			stored_data = []
-			with open(data["response"]["players"][0]["steamid"]+".json", "r") as outfile:			
-				try:
+			try:
+				with open(data["response"]["players"][0]["steamid"]+".json", "r") as outfile:			
 					stored_data = json.load(outfile)
-				except ValueError:
-					stored_data = []
+			except:
+				stored_data = []
 
 			with open(data["response"]["players"][0]["steamid"]+".json", "w") as outfile:
 				stored_data.append(data["response"]["players"][0])
